@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel</title>
+    <script>
+
+        var senha = 2678;
+        let meias = 0;
+        let gratuidades = 0;
+        let inteiras = 0;
+        var diaria = 0;
+        var nomeHotel = prompt("Qual o nome do hotel?");
+        alert("O nome do Hotel é: " + nomeHotel);
+
+        var nomeUsuario = prompt("Por favor, informe o seu nome:");
+
+        function inicio() {
+            meias = 0;
+            gratuidades = 0;
+            inteiras = 0;
+            diaria = 0;
+            verificar_senha();
+            alert("Bem vindo ao Hotel " + nomeHotel + ", " + nomeUsuario + ". " + "É um imenso prazer ter você por aqui!");
+
+            var escolha = parseInt(prompt('Selecione uma opção: \n 1.) Valor da diária \n 2.) Cadastrar Hóspedes \n 3.) Sair'));
+
+            switch (escolha) {
+                // 1 - 
+                case 1: escolha = Valordiaria;
+                    diaria = Valordiaria();
+                    diasHospedagem(nomeUsuario, diaria);
+                    break;
+
+                case 2: escolha = CadastrarHospede;
+                    diaria = Valordiaria();
+                    CadastrarHospede(diaria);
+                    break;
+
+                case 3: escolha = sair;
+                    sair();
+                    break;
+
+
+            }
+
+            if (escolha <= 0 || isNaN(escolha) || escolha >= 4 || escolha === '') {
+                erro();
+            } else {
+                inicio()
+            }
+        }
+
+        function Valordiaria() {
+            diaria = parseFloat(prompt('Qual o valor da diária?'));
+
+            if (isNaN(diaria) || diaria === '' || diaria <= 0) {
+                alert("Valor inválido " + nomeUsuario + ".");
+                Valordiaria();
+            } else {
+                return diaria;
+            }
+        }
+
+        function diasHospedagem(nomeUsuario, diaria) {
+
+            var dias = parseInt(prompt("Quantas diárias serão necessarias?"));
+
+            if (isNaN(dias) || dias == '' || dias > 30 || dias <= 0) {
+                alert("Valor inválido");
+                diasHospedagem();
+            } else {
+                confirmaHospedagem(dias, nomeUsuario, diaria);
+            }
+        }
+
+        function calcValor(dias, diaria){
+            var valorTotal = dias * diaria;
+            return valorTotal;
+        }
+
+        function confirmaHospedagem(dias, nomeUsuario, diaria) {
+
+            var nomeHospede = prompt("Qual o nome do hóspede?");
+            if (nomeHospede == '' || !isNaN(nomeHospede)) {
+                alert("Digite seu nome corretamente");
+                confirmaHospedagem(dias, nomeUsuario, diaria);
+            } else {
+                var perguntaHospedagem = prompt(nomeUsuario + ", você confirma a hospedagem para " + nomeHospede + " por " + dias + " dias? S/N");
+
+                if (perguntaHospedagem == 'S' || perguntaHospedagem == 's' || perguntaHospedagem == "Sim" || perguntaHospedagem == "sim") {
+                    alert( nomeUsuario + ", reserva efetuada para " + nomeHospede + ". O valor total é de: R$ " + calcValor(dias, diaria).toFixed(2));
+                    inicio();
+                } else {
+                    alert(nomeUsuario + ", reserva não efetuada.");
+                    inicio();
+                }
+            }
+        } 
+
+
+        function verificar_senha() {
+
+            var senhaUsuario = parseInt(prompt("Digite sua senha:"));
+
+            if (senhaUsuario !== senha || isNaN(senhaUsuario) || senhaUsuario === '') {
+                alert("Senha incorreta");
+                inicio();
+            }
+
+        }
+        function erro() {
+            alert('Por favor, informe um número entre 1 e 3');
+            inicio();
+        }
+
+        function CadastrarHospede(diaria) {
+     
+            var nomeHospede = prompt("Por favor, informe o nome do hóspede: (Para encerrar o cadastro digite 'PARE').");
+            if(nomeHospede == "PARE") {                
+                var valorTotal = diaria*inteiras + diaria/2*meias;
+
+                alert(nomeUsuario + ", o valor total das hospedagens é: R$ " + valorTotal + ". " + gratuidades + " gratuidade(s). " 
+                    + meias + " meia(s).")
+                    inicio();
+            } 
+            else if (isNaN(nomeHospede) && nomeHospede != "") {
+                var idadeHospede = parseInt(prompt("Por favor, informe a idade do hóspede:"));
+                if(isNaN(idadeHospede) || idadeHospede == "" || idadeHospede < 0){
+                    alert("Idade inválida");
+                    CadastrarHospede(diaria);
+                } 
+                else{            
+                    if(idadeHospede <= 6){
+                        gratuidades++;
+                        alert(nomeHospede + " cadastrado com sucesso. " + nomeHospede + " possui gratuidade");
+                    }
+                    else if (idadeHospede >= 60){
+                        meias++;
+                        alert(nomeHospede + " cadastrado com sucesso. " + nomeHospede + " possui direito a meia");
+                    }
+                    else{
+                        inteiras++;
+                        alert(nomeHospede + " cadastrado com sucesso. ");
+                    } 
+                    CadastrarHospede(diaria); 
+                }
+            }
+            else {
+                alert("Por favor, insira um nome válido");
+                CadastrarHospede(diaria);
+            }
+              
+        }
+
+        function sair() {
+            var confirma = confirm('Você deseja sair?');
+            if (confirma) {
+                alert("Muito obrigado e até logo," + nomeUsuario);
+                exit(0);
+            } else {
+                inicio();
+            }
+        }
+        
+        inicio();
+
+    </script>
+</head>
+
+</html>
